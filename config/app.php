@@ -67,6 +67,9 @@ return [
 
     'timezone' => 'UTC',
 
+    //faker本地化 By SongLu
+    'faker_locale' => 'zh_CN',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
