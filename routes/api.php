@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //课程
 Route::get('lesson/index', 'LessonsController@getIndex');
 Route::get('lesson/show/{id}', 'LessonsController@getShow');
+Route::post('lesson/add-lesson', 'LessonsController@postAddLesson');

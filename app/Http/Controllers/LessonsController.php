@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Lessons;
 use App\Transform\LessonsTransform;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Response;
 
 /**
  * 课程相关控制器
@@ -27,6 +25,7 @@ class LessonsController extends ApiController
     public function __construct(LessonsTransform $lessonTransform)
     {
         $this->lessonTransform = $lessonTransform;
+        $this->middleware('auth.basic', ['only' => ['postAddLesson', 'updateLesson']]);
     }
 
     /**
@@ -68,6 +67,37 @@ class LessonsController extends ApiController
             'msg' => 'success',
             'data' => $lesson
         ]);
+    }
+
+
+    /**
+     * 添加课程信息
+     * @param Request $request
+     *
+     * @return array|mixed
+     * @author: SongLu
+     */
+    public function postAddLesson(Request $request)
+    {
+        if(!$request->get('title') || !$request->get('body')){
+            return $this->setCode(422)->responseError('validate fails!');
+        }
+
+        //create方法参数为数组
+        Lessons::create($request->all());
+        return $this->setCode(201)->response(
+            [
+                'code' => $this->getCode(),
+                'msg' => 'lesson create success!',
+                'data' => []
+            ]
+        );
+
+    }
+
+    public function updateLesson(Request $request)
+    {
+        dd('update');
     }
 
 }
